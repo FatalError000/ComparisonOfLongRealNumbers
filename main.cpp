@@ -7,13 +7,13 @@ string TakeSecondPart(string number)
 
     for (int i = number.length() - 1; i >= 0; i--)
     {
-        if ((i == 0) && (number[i] == '.'))
+        if ((i == (number.length() - 1)) && (number[i] == '.'))
         {
             result += '0';
         }
         else
         {
-            result += number[i];
+            result = number[i] + result;
         }
 
         if (number[i] == '.')
@@ -45,16 +45,118 @@ string TakeFirstPart(string number)
     }
 }
 
-string LongRealNumberComparisonInDetail(string number1part, string number2part)
+string LongRealNumberComparisonInDetail(string number1part, string number2part, int part)
 {
-    
+    string result = "";
+
+    if (part == 1)
+    {
+        if (number1part.length() > number2part.length())
+        {
+            return result = "More";
+        }
+        else if (number1part.length() < number2part.length())
+        {
+            return result = "Less";
+        }
+        else
+        {
+            for (int i = 0; i < number1part.length(); i++)
+            {
+                if (number1part[i] > number2part[i])
+                {
+                    return result = "More";
+                }
+                else if (number1part[i] < number2part[i])
+                {
+                    return result = "Less";
+                }
+            }
+
+            return result = "Equal";
+        }
+    }
+    else // (part == 2)
+    {
+        if (number1part.length() > number2part.length()) // первое большей длины
+        {
+            for (int i = 0; i < number2part.length(); i++)
+            {
+                if (number1part[i] > number2part[i])
+                {
+                    return result = "More";
+                }
+                else if (number1part[i] < number2part[i])
+                {
+                    return result = "Less";
+                }
+            }
+
+            for (int i = number2part.length() - 1; i < number1part.length(); i++)
+            {
+                if (number1part[i] > '0')
+                {
+                    return result = "More";
+                }
+            }
+
+            return result = "Equal";
+        }
+        else if (number1part.length() < number2part.length()) // второе большей длины
+        {
+            for (int i = 0; i < number1part.length(); i++)
+            {
+                if (number1part[i] > number2part[i])
+                {
+                    return result = "More";
+                }
+                else if (number1part[i] < number2part[i])
+                {
+                    return result = "Less";
+                }
+            }
+
+            for (int i = number1part.length() - 1; i < number2part.length(); i++)
+            {
+                if (number1part[i] > '0')
+                {
+                    return result = "More";
+                }
+            }
+
+            return result = "Equal";
+        }
+        else // равная длина
+        {
+            for (int i = 0; i < number1part.length(); i++)
+            {
+                if (number1part[i] > number2part[i])
+                {
+                    return result = "More";
+                }
+                else if (number1part[i] < number2part[i])
+                {
+                    return result = "Less";
+                }
+            }
+
+            return result = "Equal";
+        }
+    }
 }
 
 string LongRealNumberComparison(string firstNumber, string secondNumber)
 {
-    
+    string result = "";
 
-    
+    result = LongRealNumberComparisonInDetail(TakeFirstPart(firstNumber), TakeFirstPart(secondNumber), 1);
+
+    if (result != "Equal")
+        return result;
+
+    result = LongRealNumberComparisonInDetail(TakeSecondPart(firstNumber), TakeSecondPart(secondNumber), 2);
+
+    return result;
 }
 
 int LongNumberValidation(string number)
