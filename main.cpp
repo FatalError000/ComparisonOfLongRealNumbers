@@ -33,9 +33,16 @@ string TakeFirstPart(string number)
         {
             result += '0';
         }
+        if ((i == 0) && (number[i] == '0'))
+        {
+            continue;
+        }
         else
         {
-            result += number[i];
+            if (number[i] != '.')
+            {
+                result += number[i];
+            }            
         }
         
         if (number[i] == '.')
@@ -43,6 +50,8 @@ string TakeFirstPart(string number)
             return result;
         }
     }
+
+    return result;
 }
 
 string LongRealNumberComparisonInDetail(string number1part, string number2part, int part)
@@ -169,7 +178,7 @@ int LongNumberValidation(string number)
         if (((number[0] == '-') || (number[0] == '.'))
             && (number.length() == 1))
         {
-            cout << "Число некорректно! Есть минус или точка, и при этом длина числа = один символ. Должна быть хоть одна цифра!";
+            cout << "Wrong number! Only '-' or dot. Even one number must be in your number!" << endl;
             return 0;
         }
 
@@ -190,7 +199,7 @@ int LongNumberValidation(string number)
                 if (((number[i] < '0') || (number[i] > '9'))
                     && (number[i] != '.'))
                 {
-                    cout << "Число некорректно! Присутсвуют недопустимые символы. Символ " << number[i];
+                    cout << "Wrong number! Wrong symbol detected. Symbol : " << number[i] << endl;
                     return 0;
                 }
                 else
@@ -198,27 +207,63 @@ int LongNumberValidation(string number)
                     if ((number[1] == '.') && (number.length() == 2)
                         && ((number[0] == '-')))
                     {
-                        cout << "Число некорректно! Должно быть хоть одно число!";
+                        cout << "Wrong number! Even one number must be in your number." << endl;
                         return 0;
                     }
                 }
             }
-
-            cout << "Число корректно!";
         }
         else
         {
-            cout << "Число некорректно! В нём две точки, допустима лишь одна!";
+            cout << "Wrong number! Two dots are invalid! It should be one dot!" << endl;
             return 0;
         }
     }
     else
     {
-        cout << "Число некорректно! Первый символ не '-' или '.' или число.";
+        cout << "Wrong number First symbol is not '-' or '.' or number." << endl;
         return 0;
     }
 
     return 1;
+}
+
+string IfNegativeNumber(string funcRes, string firstNumber, string secondNumber)
+{
+    string result = "";
+
+    if ((firstNumber[0] == '-') || (secondNumber[0] == '-'))
+    {
+        if ((firstNumber[0] == '-') || (secondNumber[0] != '-'))
+        {
+            return result = "Less";
+        }
+
+        if ((firstNumber[0] != '-') || (secondNumber[0] == '-'))
+        {
+            return result = "More";
+        }
+
+        if ((firstNumber[0] == '-') || (secondNumber[0] == '-'))
+        {
+            if (funcRes == "More")
+            {
+                return result = "Less";
+            }
+            else if (funcRes == "Less")
+            {
+                return result = "More";
+            }
+            else
+            {
+                return funcRes;
+            }
+        }
+    }
+    else
+    {
+        return funcRes;
+    }
 }
 
 int main()
@@ -237,7 +282,7 @@ int main()
       cin >> secondNumber;
     } while (LongNumberValidation(secondNumber) != 1);
 
-    cout << LongRealNumberComparison(firstNumber, secondNumber);
+    cout << IfNegativeNumber(LongRealNumberComparison(firstNumber, secondNumber), firstNumber, secondNumber) << endl;
 
     return 0;
 }
