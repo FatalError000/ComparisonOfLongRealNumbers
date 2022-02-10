@@ -266,13 +266,34 @@ string IfNegativeNumber(string funcRes, string firstNumber, string secondNumber)
     }
 }
 
-int main()
+void Tests()
+{
+    cout << "Enter first number  : 2.39\n";
+    cout << "Enter second number : 3.61\n";
+    cout << "Answer " << IfNegativeNumber(LongRealNumberComparison("2.39", "3.61"), "2.39", "3.61") << endl;
+
+    cout << endl << "Enter first number  : 0123\n";
+    cout << "Enter second number : 12.3\n";
+    cout << "Answer " << IfNegativeNumber(LongRealNumberComparison("0123", "12.3"), "0123", "12.3") << endl;
+
+    cout << endl << "Enter first number  : 12345678\n";
+    cout << "Enter second number : 12345678.00\n";
+    cout << "Answer " << IfNegativeNumber(LongRealNumberComparison("12345678", "12345678.00"), "12345678", "12345678.00") << endl;
+
+    cout << endl << "Enter first number  : -1.0\n";
+    cout << "Enter second number : 1.0\n";
+    cout << "Answer " << IfNegativeNumber(LongRealNumberComparison("-1.0", "1.0"), "-1.0", "1.0") << endl;
+}
+
+int main(int argc, char** argv)
 {
     string firstNumber, secondNumber;
 
+    Tests();
+
     do
     {
-      cout << "Enter first number\n";
+      cout << endl << "Enter first number\n";
       cin >> firstNumber;
     } while (LongNumberValidation(firstNumber) != 1);
 
@@ -282,7 +303,7 @@ int main()
       cin >> secondNumber;
     } while (LongNumberValidation(secondNumber) != 1);
 
-    cout << IfNegativeNumber(LongRealNumberComparison(firstNumber, secondNumber), firstNumber, secondNumber) << endl;
+    cout << "Answer " << IfNegativeNumber(LongRealNumberComparison(firstNumber, secondNumber), firstNumber, secondNumber) << endl;
 
     return 0;
 }
